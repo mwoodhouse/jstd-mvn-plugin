@@ -8,7 +8,7 @@
     <artifactId>jstd-mvn-plugin</artifactId>
     <version>1.0</version>
 
-    <!--<packaging>maven-plugin</packaging>-->
+    <packaging>maven-plugin</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -23,7 +23,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <version>4.8.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
