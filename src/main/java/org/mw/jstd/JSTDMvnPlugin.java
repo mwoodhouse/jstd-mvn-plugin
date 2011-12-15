@@ -70,8 +70,6 @@ public class JSTDMvnPlugin extends AbstractMojo
             JsTestDriver jstd = builder.build();
 
             jstd.runConfiguration();
-
-            getLog().info("Finished action run.");
         }
         catch (InvalidFlagException e)
         {
@@ -92,8 +90,11 @@ public class JSTDMvnPlugin extends AbstractMojo
         catch (Exception e)
         {
             throw new MojoExecutionException("Unexpected plugin error: " + e.getMessage(), e);
-//            System.out.println("Unexpected Runner Condition: " + e.getMessage() + "\n Use --runnerMode DEBUG for more information.");
         }
+
+        System.out.println("\n");
+        System.out.println(" J S T D  MVN Plugin - Complete... :)");
+        System.out.println("\n");
     }
 
     private String[] getArgs()
@@ -114,10 +115,10 @@ public class JSTDMvnPlugin extends AbstractMojo
     }
 
     private void printBanner() {
-        System.out.println("\n" +
-                "-------------------------------------------\n" +
-                " J S T D  MVN PLUGIN                       \n" +
-                "-------------------------------------------\n");
+        getLog().info("\n");
+        getLog().info("-------------------------------------------");
+        getLog().info(" J S T D  MVN PLUGIN ");
+        getLog().info("-------------------------------------------");
     }
 
     public void setConfigFilePath(final String configFilePath)
