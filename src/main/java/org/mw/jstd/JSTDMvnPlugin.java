@@ -15,6 +15,7 @@ import org.apache.maven.plugin.MojoFailureException;
 
 /**
  * runs jstd within maven
+ * @requiresDependencyResolution
  * @goal jstd
  * @phase test
  */
