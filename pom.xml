@@ -63,7 +63,7 @@
     </dependencies>
 
     <scm>
-        <url>git://github.com/mwoodhouse/jstd-mvn-plugin.git</url>
+        <url>git:git://github.com/mwoodhouse/jstd-mvn-plugin.git</url>
         <connection>scm:git:git://github.com/mwoodhouse/jstd-mvn-plugin.git</connection>
         <developerConnection>scm:git:git://github.com/mwoodhouse/jstd-mvn-plugin.git</developerConnection>
     </scm>
