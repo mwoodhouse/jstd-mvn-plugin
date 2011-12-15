@@ -13,6 +13,8 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
+import java.util.ArrayList;
+
 /**
  * runs jstd within maven
  * @requiresDependencyResolution
@@ -29,11 +31,18 @@ public class JSTDMvnPlugin extends AbstractMojo
      */
     private String configFilePath;
 
+    /**
+     * test output path
+     *
+     * @parameter
+     */
+    private String testOutputPath;
+
     public void execute() throws MojoExecutionException, MojoFailureException
     {
         printBanner();
 
-        run(new String[] {"--tests", "all", "--config", configFilePath});
+        run(getArgs());
     }
 
     private void run(String[] args) throws MojoExecutionException, MojoFailureException
@@ -44,11 +53,16 @@ public class JSTDMvnPlugin extends AbstractMojo
         {
             CmdFlags cmdLineFlags = new CmdLineFlagsFactory().create(args);
 
-//            LogManager.getLogManager().readConfiguration(cmdLineFlags.getRunnerMode().getLogConfig());
+            // todo - look at how plugins can fit into the build process 
+//            List<Plugin> cmdLinePlugins = cmdLineFlags.getPlugins();
+//            final PluginLoader pluginLoader = new PluginLoader();
+//            final List<Module> pluginModules = pluginLoader.load(cmdLinePlugins);
+//            getLog().info(String.format("loaded plugins %s", pluginModules));
 
             JsTestDriverBuilder builder = new JsTestDriverBuilder();
             builder.setBaseDir(cmdLineFlags.getBasePath().getCanonicalFile());
             builder.setConfigurationSource(cmdLineFlags.getConfigurationSource());
+//            builder.addPluginModules(pluginModules);
             builder.withPluginInitializer(TestResultPrintingModule.TestResultPrintingInitializer.class);
             builder.setRunnerMode(cmdLineFlags.getRunnerMode());
             builder.setFlags(cmdLineFlags.getUnusedFlagsAsArgs());
@@ -82,9 +96,21 @@ public class JSTDMvnPlugin extends AbstractMojo
         }
     }
 
-    public void setConfigFilePath(final String configFilePath)
+    private String[] getArgs()
     {
-        this.configFilePath = configFilePath;
+        final ArrayList<String> args = new ArrayList<String>();
+
+        args.add("--tests");
+        args.add("all");
+        args.add("--config");
+        args.add(configFilePath);
+
+        if(testOutputPath != null)
+        {
+            args.add("--testOutput");
+            args.add(testOutputPath);
+        }
+        return args.toArray(new String[]{});
     }
 
     private void printBanner() {
@@ -92,5 +118,15 @@ public class JSTDMvnPlugin extends AbstractMojo
                 "-------------------------------------------\n" +
                 " J S T D  MVN PLUGIN                       \n" +
                 "-------------------------------------------\n");
+    }
+
+    public void setConfigFilePath(final String configFilePath)
+    {
+        this.configFilePath = configFilePath;
+    }
+
+    public void setTestOutputPath(final String testOutputPath)
+    {
+        this.testOutputPath = testOutputPath;
     }
 }

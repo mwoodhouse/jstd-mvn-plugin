@@ -11,7 +11,8 @@ public class JSTDMvnPluginTest
     {
         JSTDMvnPlugin jstdMvnPlugin = new JSTDMvnPlugin();
 
-        jstdMvnPlugin.setConfigFilePath("/Users/mwoodhouse/projects/jstd-mvn-plugin/runner.conf");
+        jstdMvnPlugin.setConfigFilePath("runner.conf");
+        jstdMvnPlugin.setTestOutputPath("coverage");
 
         jstdMvnPlugin.execute();
     }

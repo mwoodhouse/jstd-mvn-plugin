@@ -9,7 +9,7 @@
 
     <groupId>org.mw.jstd</groupId>
     <artifactId>jstd-mvn-plugin</artifactId>
-    <version>1.0</version>
+    <version>1.2</version>
     <description>JSTestDriver Maven Plugin</description>
 
     <packaging>maven-plugin</packaging>
