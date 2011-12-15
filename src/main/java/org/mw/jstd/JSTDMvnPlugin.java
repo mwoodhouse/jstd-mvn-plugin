@@ -13,9 +13,6 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
 /**
  * runs jstd within maven
  * @goal jstd
@@ -34,8 +31,6 @@ public class JSTDMvnPlugin extends AbstractMojo
     public void execute() throws MojoExecutionException, MojoFailureException
     {
         printBanner();
-
-        System.setOut(new PrintStream(new ByteArrayOutputStream()));
 
         run(new String[] {"--tests", "all", "--config", configFilePath});
     }
