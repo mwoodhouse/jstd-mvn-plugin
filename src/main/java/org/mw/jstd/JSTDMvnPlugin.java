@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 /**
  * runs jstd within maven
+ *
  * @requiresDependencyResolution
  * @goal jstd
  * @phase test
@@ -47,26 +48,19 @@ public class JSTDMvnPlugin extends AbstractMojo
 
     private void run(String[] args) throws MojoExecutionException, MojoFailureException
     {
-        final MvnTestResultLogger mvnTestResultLogger = new MvnTestResultLogger(getLog());
-
         try
         {
             CmdFlags cmdLineFlags = new CmdLineFlagsFactory().create(args);
 
-            // todo - look at how plugins can fit into the build process 
-//            List<Plugin> cmdLinePlugins = cmdLineFlags.getPlugins();
-//            final PluginLoader pluginLoader = new PluginLoader();
-//            final List<Module> pluginModules = pluginLoader.load(cmdLinePlugins);
-//            getLog().info(String.format("loaded plugins %s", pluginModules));
-
             JsTestDriverBuilder builder = new JsTestDriverBuilder();
+
             builder.setBaseDir(cmdLineFlags.getBasePath().getCanonicalFile());
             builder.setConfigurationSource(cmdLineFlags.getConfigurationSource());
-//            builder.addPluginModules(pluginModules);
             builder.withPluginInitializer(TestResultPrintingModule.TestResultPrintingInitializer.class);
             builder.setRunnerMode(cmdLineFlags.getRunnerMode());
             builder.setFlags(cmdLineFlags.getUnusedFlagsAsArgs());
-            builder.addTestListener(mvnTestResultLogger);
+            builder.addTestListener(new MvnTestResultLogger(getLog()));
+
             JsTestDriver jstd = builder.build();
 
             jstd.runConfiguration();
@@ -106,15 +100,16 @@ public class JSTDMvnPlugin extends AbstractMojo
         args.add("--config");
         args.add(configFilePath);
 
-        if(testOutputPath != null)
+        if (testOutputPath != null)
         {
             args.add("--testOutput");
             args.add(testOutputPath);
         }
-        return args.toArray(new String[]{});
+        return args.toArray(new String[] {});
     }
 
-    private void printBanner() {
+    private void printBanner()
+    {
         getLog().info("\n");
         getLog().info("-------------------------------------------");
         getLog().info(" J S T D  MVN PLUGIN ");
